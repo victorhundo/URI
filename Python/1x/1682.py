@@ -1,27 +1,7 @@
 ##
-## INCOMPLETE - maximum recursion depth exceeded in comparison!!
+## INCOMPLETE - Wrong answer (100%) !!
 ##
-
-nop = ['N','O','P']
-
-def get_genoma(atual,limite, genoma="", sub="", adj=""):
-    if (len(genoma) == limite):
-        return genoma
-    else:
-        if (atual == 'N'): proximos = ['O','P']
-        elif (atual == 'O'): proximos = ['N','P']
-        else: proximos = ['N']
-
-        if (atual == 'N' and len(genoma) != 1):
-            adj = sub
-            sub = ""
-        
-        genoma += atual
-        sub += atual
-        for proximo in proximos:
-            if ( sub + proximo != adj):
-                return get_genoma(proximo, limite, genoma,sub,adj)
-        
+      
 while True:
     limite = int(input())
 
@@ -29,4 +9,28 @@ while True:
         print()
         break
     else:
-        print(get_genoma('N',limite))
+        genoma = ""
+        sub = ""
+        adj1 = ""
+        adj2 = ""
+        pilha = ['N']
+        while (len(genoma) != limite):
+            atual = pilha.pop()
+            if (atual == 'N'): proximos = ['P','O']
+            elif (atual == 'O'): proximos = ['P','N']
+            else: proximos = ['N']
+
+            if (atual == 'N' and len(genoma) != 0):
+                adj2 = adj1
+                adj1 = sub
+                sub = ""
+
+            genoma += atual
+            sub += atual
+            for proximo in proximos:
+                if (atual == 'N'):
+                    if (sub + 'P' != adj1 and sub + '
+                if (sub + proximo != adj1 and sub + proximo != adj2):
+                    pilha.append(proximo)
+
+        print(genoma)
