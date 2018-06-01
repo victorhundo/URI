@@ -1,53 +1,31 @@
-##
-## INCOMPLETE - Time limit exceeded!!
-##
-
-word = input()
-visited = [False] * len(word) 
-path = ""
-output = []
-
-# Retorna lista com indicies em ordem alfabetica
-# da palavara a partir do indice u
-def alpha_order(u,word):
-    if (u != 0):  u += 1
-
-    index_order = [0] * len(word[u:])
-    aux = list(word)
-    alpha = sorted(word[u:])
+import collections
+def bfs(palavra):
+    fila = []
+    fila.insert(0, (0,palavra[0]))
     
-    for j in range(u):
-        aux[j] = '-'
-        
-    for i in range(u, len(word)):
-        j = i - u
-        index = aux.index(alpha[j])
-        index_order[j] = index
-        aux[index] = '-'
-        
-    return index_order
 
-# Retorna lista com todos os caminhos
-# do vertice 'u' até o ultimo vertice
-def bfs(u,visisted,path):
-    visited[u] = True
-    path += word[u]
+    while fila:
+        atual = fila.pop()
+        index = atual[0]
+        path = atual[1]
+        
+        if ( (not path[1:] in saida) and path[1:] != ''):
+            saida[path[1:]] = 0
+
+        if (not path in saida):
+            saida[path] = 0
+            for i in range(index + 1, len(palavra)):
+                fila.insert( 0, (i, path + palavra[i]))
+
+while True:
+    saida = {}
     
-    if (not output.count(path) > 0):
-        output.append(path)
-        print(path)
+    try:
+        palavra = input()
+    except EOFError:
+        break
 
-    children = alpha_order(u,word)        
-    for i in children:
-        if (visited[i] == False):
-            bfs(i,visited,path)
-                
-    path = path[:-1]
-    visited[u] = False
-
-
-def main(word):
-    for i in alpha_order(0,word):
-        bfs(i,visited,path)
-
-main(word)
+    bfs(palavra)
+    for i in sorted(saida):
+        print(i)
+    print()
