@@ -1,22 +1,11 @@
-def binary_search(array,i,j,n):
-    if (i <= j):
-        mid = int((i + j)/2)
-        if (array[i] == n):
-            return (n,i + 1)
-        if (array[mid] == n): 
-            return (n,mid + 1)
-        if (array[mid] < n):  
-            return binary_search(array,mid + 1,j,n)
-        else:
-            return binary_search(array,i,mid - 1,n)
-    else:
-        return None
-
+from bisect import bisect_left
 
 def busca(array,n):
-    for i in range(len(array)):
-        if (array[i] == n):
-            return (n, i + 1)
+    index = (bisect_left(array,n))
+    if index < len(array) and array[index] == n:
+       return index + 1
+    else:
+        return None
 
 caso = 0
 while True:
@@ -25,20 +14,22 @@ while True:
     q = int(entrada[1])
     if (q == 0 and n == 0): break
     caso += 1
-    array = []
+    array = [0] * n
     for i in range(n):
         elemento = int(input())
-        array.append(elemento)
+        array[i] = elemento
 
     print("CASE# {}:".format(caso))
+    array = sorted(array)
     for i in range(q):
         consulta = int(input())
-        resultado = busca(array, consulta)
+        resultado = busca(array,consulta)
         if (resultado):
             saida = "{} found at {}"
-            print(saida.format(resultado[0], resultado[1]))
+            print(saida.format(consulta, resultado))
         else:
             saida = "{} not found"
             print(saida.format(consulta))
+            
 
     
