@@ -3,7 +3,7 @@ from bisect import bisect_left
 def busca(array,n):
     index = (bisect_left(array,n))
     if index < len(array) and array[index] == n:
-       return index + 1
+       return index
     else:
         return None
 
